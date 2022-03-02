@@ -1,7 +1,9 @@
-// TODO: Create an array of questions for user input
-const questions = [];
+const fs = require ('fs');
+const inquirer = require('inquirer'); 
+
+
 inquirer
-.prompt ([
+const managerQuestions = [
 {
     type: "input",
     message: "What is the team manager's name",
@@ -22,21 +24,20 @@ inquirer
     message: "Enter the team manager's office number",
     name: "manager-office"    
 }
-]);
+];
 
 //make a new function that you can call after the initial prompts about adding engineer or intern
-inquirer
-.prompt ([
+const newEmployee = [
 {
     type: "list",
     message: "Would you like to add an engineer or an intern to your team?",
     name: "employee-type", 
     choices: ['engineer', 'intern', 'done']   
 }
-]);
+];
+
 // make another prompt function that can be called after to collect engineer info
-inquirer
-.prompt ([
+const engineerQuestions = [
     {
         type: "input",
         message: "What is the engineer's name",
@@ -57,11 +58,10 @@ inquirer
         message: "Enter the engineer's Github username",
         name: "engineer-username"    
     }
-    ]);
+    ];
 
 // make another prompt function that can be called to collect intern info
-inquirer
-.prompt ([
+const internQuestions = [
     {
         type: "input",
         message: "What is the intern's name",
@@ -82,6 +82,35 @@ inquirer
         message: "Enter the intern's school",
         name: "engineer-username"    
     }
-    ]);
-//need to update this for this project
-.then(questions => writeToFile('./README.md', generateMarkdown(questions)));
+    ];
+
+
+
+// TODO: Create a function to write README file
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
+};    
+
+// TODO: Create a function to initialize app
+//notes: i don't think my then prompts are correct and I need to update my writetofile completely
+function init() {
+    inquirer
+    .prompt(managerQuestions)
+    .then (prompt(newEmployee))
+    if ( newEmployee.employee-type === "engineer") {
+        prompt(engineerQuestions)
+    }
+    else if ( newEmployee.employee-type === "intern") {
+       prompt(internQuestions)
+    }
+    else if ( newEmployee.employee-type === "done") {
+        then(answers => writeToFile('./output/index.html', generateMarkdown(answers)));   
+    }
+
+};
+
+// Function call to initialize app
+init();
