@@ -4,7 +4,7 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const Helper = require('./utils/helpers');
+const { generateMarkdown } = require('./utils/helpers');
 
 
 inquirer
@@ -96,6 +96,15 @@ const internQuestions = () => {
 ]);
 };
 
+
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
+};    
+
+
 managerQuestions()
 .then(newEmployee)
 if(newEmployee.employee-type === 'engineer'){
@@ -109,13 +118,7 @@ else {
 };
 
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-    });
-};    
+
 
 // TODO: Create a function to initialize app
 //notes: i don't think my then prompts are correct and I need to update my writetofile completely
