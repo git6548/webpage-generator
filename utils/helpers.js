@@ -19,15 +19,8 @@ function generateMarkdown(data) {
         <header>
             <h1>My Team</h1>
         </header>
-    //do some form of for each here?    
-        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-        <div class="card-header">Header</div>
-        <div class="card-body">
-          <h5 class="card-title">Secondary card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
 
-
+        ${makeEmployeeBlocks(data)}
     
         <script src="./assets/js/script.js" async defer></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -43,8 +36,25 @@ function generateMarkdown(data) {
     
     </html>
   `;
-  }
+  };
   
+
+  function makeEmployeeBlocks(data){
+     // for Each
+      return `
+      //do some form of for each here?    
+      <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header">Header</div>
+      <div class="card-body">
+        <h5 class="card-title">Secondary card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+
+      
+      `;
+  };
+
+
   module.exports = generateMarkdown;
 
   // ${data.project}
