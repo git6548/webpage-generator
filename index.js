@@ -4,7 +4,7 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const { generateMarkdown } = require('./utils/helpers');
+const { generateMarkdown } = require('./src/helpers');
 
 let EmployeeData = [];
 const managerQuestions = () => {
@@ -41,7 +41,22 @@ const newEmployee = () => {
             name: "employee_type",
             choices: ['engineer', 'intern', 'done']
         }
-    ]);
+    ])
+    
+    .then(employeeTypeData => {
+        console.log("YOOOOOOOOO")
+        if (employeeTypeData.employee_type === 'engineer') {
+            engineerQuestions()
+
+        }
+        else if (employeeTypeData.employee_type === 'intern') {
+            internQuestions()
+               
+        }
+        else {
+            (answers => writeToFile('./dist/index.html', generateMarkdown(answers)));
+        }
+    });;
 };
 // make another prompt function that can be called after to collect engineer info
 const engineerQuestions = () => {
@@ -66,7 +81,15 @@ const engineerQuestions = () => {
             message: "Enter the engineer's Github username",
             name: "engineer_username"
         }
-    ]);
+    ])
+    .then((engineerData) => {
+        console.log(engineerData)
+        const engineer = new Engineer(engineerData.engineer_name,engineerData.engineer_ID,engineerData.engineer_email, engineerData.engineer_username )
+        EmployeeData.push(engineer);
+        console.log(engineer)
+        newEmployee();
+    });
+    ;
 };
 
 // make another prompt function that can be called to collect intern info
@@ -92,7 +115,11 @@ const internQuestions = () => {
             message: "Enter the intern's school",
             name: "engineer_username"
         }
-    ]);
+    ])
+    .then((internData) => {
+        EmployeeData = internData;
+        newEmployee();
+    });
 };
 
 
@@ -106,28 +133,11 @@ function writeToFile(fileName, data) {
 
 managerQuestions()
     .then((managerData) => {
-        EmployeeData = managerData;
-        newEmployee()
-            .then((employeeTypeData => {
-                if (employeeTypeData.employee_type === 'engineer') {
-                    engineerQuestions()
-                        .then((engineerData) => {
-                            EmployeeData = engineerData;
-                            newEmployee();
-                        });
-                }
-                else if (employeeTypeData.employee_type === 'intern') {
-                    internQuestions()
-                        .then((internData) => {
-                            EmployeeData = internData;
-                            newEmployee();
-                        });
-                }
-                else {
-                    (answers => writeToFile('./dist/index.html', generateMarkdown(answers)));
-                }
-            }));
-    });
+       // EmployeeData = managerData;
+         newEmployee()
+
+})
+
 
 
 

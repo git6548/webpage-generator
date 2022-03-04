@@ -40,13 +40,18 @@ function generateMarkdown(data) {
   
 
   function makeEmployeeBlocks(data){
-     // for Each
+     // for Each data(employeed)
+     //check data.getRole()
+     //if role = manager, return managerhtml block
+     //if role = engineer, return engineerhtml block
+     //if role = intern, return interhtml block
+
       return `
       //do some form of for each here?    
       <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
       <div class="card-header">Header</div>
       <div class="card-body">
-        <h5 class="card-title">Secondary card title</h5>
+        <h5 class="card-title">${data.getName()}</h5>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       </div>
 
