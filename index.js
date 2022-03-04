@@ -29,8 +29,16 @@ const managerQuestions = () => {
             message: "Enter the team manager's office number",
             name: "manager_office"
         }
-    ]);
+    ])
+    .then((managerData) => {
+        const manager = new Manager(managerData.manager_name,managerData.manager_ID,managerData.manager_email, managerData.manager_office);
+        EmployeeData.push(manager);
+        console.log(manager);
+    });
 };
+
+
+
 
 //make a new function that you can call after the initial prompts about adding engineer or intern
 const newEmployee = () => {
@@ -44,7 +52,6 @@ const newEmployee = () => {
     ])
     
     .then(employeeTypeData => {
-        console.log("YOOOOOOOOO")
         if (employeeTypeData.employee_type === 'engineer') {
             engineerQuestions()
 
@@ -83,10 +90,9 @@ const engineerQuestions = () => {
         }
     ])
     .then((engineerData) => {
-        console.log(engineerData)
         const engineer = new Engineer(engineerData.engineer_name,engineerData.engineer_ID,engineerData.engineer_email, engineerData.engineer_username )
         EmployeeData.push(engineer);
-        console.log(engineer)
+        console.log(engineer);
         newEmployee();
     });
     ;
@@ -98,26 +104,28 @@ const internQuestions = () => {
         {
             type: "input",
             message: "What is the intern's name",
-            name: "engineer_name"
+            name: "intern_name"
         },
         {
             type: "input",
             message: "Enter the intern's employee ID",
-            name: "engineer_ID"
+            name: "intern_ID"
         },
         {
             type: "input",
             message: "Enter the intern's email address",
-            name: "engineer_email"
+            name: "intern_email"
         },
         {
             type: "input",
             message: "Enter the intern's school",
-            name: "engineer_username"
+            name: "intern_school"
         }
     ])
     .then((internData) => {
-        EmployeeData = internData;
+        const intern = new Intern(internData.intern_name,internData.intern_ID,internData.intern_email, internData.intern_school);
+        EmployeeData.push(intern);
+        console.log(intern);
         newEmployee();
     });
 };
