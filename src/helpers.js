@@ -64,7 +64,7 @@ function generateMarkdown(EmployeeData) {
          }
          else if(employee.getRole() === 'Engineer') {
             return ` 
-            <div style = class="card text-white bg-secondary col-3" style="max-width: 18rem;">
+            <div class="card text-white bg-secondary col-3" style="max-width: 18rem;">
             <div class="card-header">${employee.getName()}</div>
             <div class="card-body">
               <h5 class="card-title">${employee.getRole()}</h5>
