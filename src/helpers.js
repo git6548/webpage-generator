@@ -1,5 +1,12 @@
-const fs = require('fs');
-function generateMarkdown(data) {
+//const fs = require('fs');
+//const {EmployeeData} = require('../index');
+//const index = require('../index');
+// const Employee = require('../lib/Employee');
+// const Engineer = require('../lib/Engineer');
+// const Manager = require('../lib/Manager');
+// const Intern = require('../lib/Intern');
+
+function generateMarkdown(EmployeeData) {
     return `
     <!DOCTYPE html>
     <html>
@@ -20,7 +27,7 @@ function generateMarkdown(data) {
             <h1>My Team</h1>
         </header>
 
-        ${makeEmployeeBlocks(data)}
+        ${(makeEmployeeBlocks(EmployeeData))}
     
         <script src="./assets/js/script.js" async defer></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -39,27 +46,53 @@ function generateMarkdown(data) {
   };
   
 
-  function makeEmployeeBlocks(data){
-     // for Each data(employeed)
-     //check data.getRole()
+  function makeEmployeeBlocks(EmployeeData){
+  // can't get this to work      EmployeeData.forEach(EmployeeData.getRole)
+  //console.log(JSON.stringify(EmployeeData) + "helper");
+  return EmployeeData.map(employee => {
+         if(employee.getRole() === 'Manager') {
+            return ` 
+            <div class="card text-white bg-secondary col-3" style="max-width: 18rem;">
+            <div class="card-header">${employee.getName()}</div>
+            <div class="card-body">
+              <h5 class="card-title">${employee.getRole()}</h5>
+              <p class="card-text">ID: ${employee.getId()}</p>
+              <p class="card-text">Email: ${employee.getEmail()}</p>
+              <p class="card-text">Office Number: ${employee.getOfficeNumber()}</p>
+            </div>         
+            `;
+         }
+         else if(employee.getRole() === 'Engineer') {
+            return ` 
+            <div style = class="card text-white bg-secondary col-3" style="max-width: 18rem;">
+            <div class="card-header">${employee.getName()}</div>
+            <div class="card-body">
+              <h5 class="card-title">${employee.getRole()}</h5>
+              <p class="card-text">ID: ${employee.getId()}</p>
+              <p class="card-text">Email: ${employee.getEmail()}</p>
+              <p class="card-text">Office Number: ${employee.getGithub()}</p>
+            </div>             
+            `;
+
+         }
+         else if (employee.getRole() === 'Intern') {
+            return `   
+            <div class="card text-white bg-secondary col-3" style="max-width: 18rem;">
+            <div class="card-header">${employee.getName()}</div>
+            <div class="card-body">
+              <h5 class="card-title">${employee.getRole()}</h5>
+              <p class="card-text">ID: ${employee.getId()}</p>
+              <p class="card-text">Email: ${employee.getEmail()}</p>
+              <p class="card-text">School: ${employee.getSchool()}</p>
+            </div>  
+            `;
+         }}).join();
+     };
+     //check EmployeeData.getRole()
      //if role = manager, return managerhtml block
      //if role = engineer, return engineerhtml block
      //if role = intern, return interhtml block
 
-      return `
-      //do some form of for each here?    
-      <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-      <div class="card-header">Header</div>
-      <div class="card-body">
-        <h5 class="card-title">${data.getName()}</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-
-      
-      `;
-  };
-
-
   module.exports = generateMarkdown;
 
-  // ${data.project}
+  // ${EmployeeData.project}

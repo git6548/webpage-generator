@@ -4,7 +4,8 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const { generateMarkdown } = require('./src/helpers');
+// const helper = require('./src/helpers');
+ const  generateMarkdown  = require('./src/helpers');
 
 let EmployeeData = [];
 const managerQuestions = () => {
@@ -33,7 +34,7 @@ const managerQuestions = () => {
     .then((managerData) => {
         const manager = new Manager(managerData.manager_name,managerData.manager_ID,managerData.manager_email, managerData.manager_office);
         EmployeeData.push(manager);
-        console.log(manager);
+       // console.log(EmployeeData);
     });
 };
 
@@ -60,9 +61,11 @@ const newEmployee = () => {
             internQuestions()
                
         }
-        else {
-            (answers => writeToFile('./dist/index.html', generateMarkdown(answers)));
-        }
+       else {
+           //console.log("here" + JSON.stringify(EmployeeData));
+          
+            createTeam(EmployeeData);
+       }
     });;
 };
 // make another prompt function that can be called after to collect engineer info
@@ -92,7 +95,7 @@ const engineerQuestions = () => {
     .then((engineerData) => {
         const engineer = new Engineer(engineerData.engineer_name,engineerData.engineer_ID,engineerData.engineer_email, engineerData.engineer_username )
         EmployeeData.push(engineer);
-        console.log(engineer);
+        //console.log(EmployeeData);
         newEmployee();
     });
     ;
@@ -125,48 +128,28 @@ const internQuestions = () => {
     .then((internData) => {
         const intern = new Intern(internData.intern_name,internData.intern_ID,internData.intern_email, internData.intern_school);
         EmployeeData.push(intern);
-        console.log(intern);
+        //console.log(EmployeeData);
         newEmployee();
     });
 };
 
 
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-    });
+// function writeToFile(fileName, data) {
+//     fs.writeFileSync(fileName, data,"utf8") 
+//         // (err) => {
+//         // if (err) throw err;
+//         console.log('The file has been saved!');
+// };
+
+
+  
+function createTeam(EmployeeData) {
+    //console.log(EmployeeData);
+(fs.writeFileSync('./dist/index.html', generateMarkdown(EmployeeData)));
 };
 
-
 managerQuestions()
-    .then((managerData) => {
-       // EmployeeData = managerData;
-         newEmployee()
-
-})
-
-
-
-
-
-// TODO: Create a function to initialize app
-//notes: i don't think my then prompts are correct and I need to update my writetofile completely
-/* function init() {
-    inquirer
-    .prompt(managerQuestions)
-    .then (prompt(newEmployee))
-    if ( newEmployee.employee-type === "engineer") {
-        prompt(engineerQuestions)
-    }
-    else if ( newEmployee.employee-type === "intern") {
-       prompt(internQuestions)
-    }
-    else if ( newEmployee.employee-type === "done") {
-        then(answers => writeToFile('./output/index.html', generateMarkdown(answers)));
-    }
-
-}; */
-
-// Function call to initialize app
-//init();
+    .then(() => {
+         newEmployee();
+       //  createTeam(EmployeeData);
+});
